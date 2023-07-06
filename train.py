@@ -27,12 +27,18 @@ parser.add_argument(
     type=str,
     help='Which task will be choosed in GLUE')
 
+parser.add_argument(
+    '--base_model',
+    default='"/home/sunyuhan/syh/sunyuhan/zju/roberta-base"',
+    type=str,
+    help='Base model to be trained')
+
 args = parser.parse_args()
 
 ddp_kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
 accelerator = Accelerator(kwargs_handlers=[ddp_kwargs])
 batch_size = 32
-model_name_or_path = "/home/sunyuhan/syh/sunyuhan/zju/roberta-base"
+model_name_or_path = args.base_model
 task = args.task
 peft_type = PeftType.LORA
 num_epochs = 100
