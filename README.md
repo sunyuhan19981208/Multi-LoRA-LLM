@@ -46,7 +46,7 @@ python compare_exp.py
 
 This will generate the comparison experience for analysis and evaluation.
 
-### Table of Experience
+### Table of Experiment
 
 | ALPHA | MNLI acc | RTE acc |
 |-------|----------|---------|
