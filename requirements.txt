@@ -1,0 +1,9 @@
+accelerate
+torch
+peft
+evaluate
+datasets
+transformers
+tqdm
+scikit-learn
+scipy
