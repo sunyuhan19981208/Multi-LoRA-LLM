@@ -12,10 +12,16 @@ pip install requirements.txt
 
 To train a LoRA model, follow these steps:
 
+You can download base model from HuggingFace, RoBERTa-base as an example:
+
+``` bash
+git clone https://huggingface.co/roberta-base
+```
+
 Execute train.sh or train.py in your terminal:
 
 ``` bash
-bash train.sh
+bash train.sh /path/to/base_model
 ```
 
 This will initiate the training process for the LoRA model.
