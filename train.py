@@ -29,9 +29,15 @@ parser.add_argument(
 
 parser.add_argument(
     '--base_model',
-    default='"/home/sunyuhan/syh/sunyuhan/zju/roberta-base"',
+    default='/home/sunyuhan/syh/sunyuhan/zju/roberta-base',
     type=str,
     help='Base model to be trained')
+
+parser.add_argument(
+    '--layer',
+    default=None,
+    type=str,
+    help='Layers to be trained')
 
 args = parser.parse_args()
 
@@ -42,7 +48,8 @@ model_name_or_path = args.base_model
 task = args.task
 peft_type = PeftType.LORA
 num_epochs = 100
-peft_config = LoraConfig(task_type="SEQ_CLS", inference_mode=False, r=8, lora_alpha=16, lora_dropout=0.1)
+layer = None if args.layer == None else [int(x) for x in args.layer.split(',')]
+peft_config = LoraConfig(task_type="SEQ_CLS", inference_mode=False, r=8, lora_alpha=16, lora_dropout=0.1, layers_to_transform=layer)
 lr = 3e-4
 if any(k in model_name_or_path for k in ("gpt", "opt", "bloom")):
     padding_side = "left"
@@ -129,7 +136,9 @@ for epoch in range(num_epochs):
     eval_metric = metric.compute()
     accelerator.print(f"epoch {epoch}:", eval_metric)
     # accelerator.save_state(f"output_dir/roberta-base-{task}-lora-epoch-{epoch+1}")
-    output_dir = f"output_dir/roberta-base-{task}-lora-epoch-{epoch+1}"
+    import datetime
+    current_time = datetime.datetime.now()
+    output_dir = f"output_dir/{task}-{current_time.strftime('%Y-%m-%d-%H-%M')}-epoch-{epoch+1}"
     accelerator.wait_for_everyone()
     unwrapped_model = accelerator.unwrap_model(model)
     unwrapped_model.save_pretrained(

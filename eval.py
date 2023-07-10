@@ -75,6 +75,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '--base_model',
+        default='/home/sunyuhan/syh/sunyuhan/zju/roberta-base',
         type=str,
         help='Base model')
 
@@ -83,5 +84,5 @@ if __name__ == "__main__":
         type=str,
         help='Lora model')
     args = parser.parse_args()
-    res = Eval(LoadDataset(task = args.task), base_model=args.base_model, lora_model=args.lora_model, task = args.task)
+    res = Eval(LoadDataset(task = args.task, base_model=args.base_model), base_model=args.base_model, lora_model=args.lora_model, task = args.task)
     print(res)
