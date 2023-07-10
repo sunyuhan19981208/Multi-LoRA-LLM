@@ -42,7 +42,7 @@ The code for merging is provided in merge.py. Use this script to perform the mer
 
 ## Producing Comparison Experiment
 
-![Comparison Experiment](./imgs/compare_exp1.jpg)
+![Comparison Experiment](./imgs/compare_exp1.png)
 
 The comparison experiment can be generated using the compare_exp.py script. Run the following command:
 
@@ -56,19 +56,17 @@ This will generate the comparison experience for analysis and evaluation.
 
 | ALPHA | MNLI acc | RTE acc |
 |-------|----------|---------|
-| 0.0   | 0.3307   | 0.7329  |
-| 0.1   | 0.4126   | 0.7292  |
-| 0.2   | 0.4239   | 0.7184  |
-| 0.3   | 0.4067   | 0.7040  |
-| 0.4   | 0.3967   | 0.6968  |
-| 0.5   | 0.4164   | 0.6606  |
-| 0.6   | 0.4955   | 0.6643  |
-| 0.7   | 0.6864   | 0.6570  |
-| 0.8   | 0.8230   | 0.5668  |
-| 0.9   | 0.8662   | 0.3141  |
-| 1.0   | 0.8656   | 0.3032  |
-
-
+| 0.0   | 0.4599   | 0.7329  |
+| 0.1   | 0.4542   | 0.7292  |
+| 0.2   | 0.4360   | 0.7184  |
+| 0.3   | 0.4105   | 0.7004  |
+| 0.4   | 0.4010   | 0.6931  |
+| 0.5   | 0.4218   | 0.6606  |
+| 0.6   | 0.5081   | 0.6715  |
+| 0.7   | 0.6943   | 0.6606  |
+| 0.8   | 0.8244   | 0.6282  |
+| 0.9   | 0.8662   | 0.6498  |
+| 1.0   | 0.8656   | 0.6318  |
 
 ## Pushing the LoRA Model to Hugging Face Model Hub
 

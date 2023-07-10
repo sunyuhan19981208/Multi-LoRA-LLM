@@ -1,4 +1,3 @@
 #!/bin/bash
-BASE_MODEL=$1
-accelerate launch train.py --task mnli --base_model $BASE_MODEL
-accelerate launch train.py --task rte --base_model $BASE_MODEL
+accelerate launch train.py --task mnli --layer 0,1,2,3,4,5
+accelerate launch train.py --task rte --layer 6,7,8,9,10,11
