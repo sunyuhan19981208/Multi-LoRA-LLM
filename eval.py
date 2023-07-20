@@ -1,9 +1,11 @@
+import pdb
 import torch
 from torch.utils.data import DataLoader
 from peft import PeftModel
 
 import evaluate
 from datasets import load_dataset
+import t5_encoder
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from tqdm import tqdm
 
@@ -40,7 +42,7 @@ def LoadDataset(base_model:str, task:str='mnli'):
     )
     return eval_dataloader
 
-def Eval(eval_dataloader:DataLoader, lora_model:str = None, base_model = "/home/sunyuhan/syh/sunyuhan/zju/roberta-base", task:str = "mnli"):
+def Eval(eval_dataloader:DataLoader, lora_model:str = None, base_model = "/home/sunyuhan/syh/sunyuhan/zju/t5-base/", task:str = "mnli"):
     if isinstance(base_model, str):
         num_labels = 3 if task.startswith("mnli") else 1 if task=="stsb" else 2
         model = AutoModelForSequenceClassification.from_pretrained(base_model, return_dict=True, num_labels=num_labels)
@@ -57,7 +59,10 @@ def Eval(eval_dataloader:DataLoader, lora_model:str = None, base_model = "/home/
         with torch.no_grad():
             outputs = model(**batch)
         predictions = outputs.logits.argmax(dim=-1)
+        if task == 'wnli':
+            predictions = predictions ^ 1
         predictions, references = predictions, batch["labels"]
+        # pdb.set_trace()
         metric.add_batch(
             predictions=predictions,
             references=references,
@@ -75,12 +80,13 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '--base_model',
-        default='/home/sunyuhan/syh/sunyuhan/zju/roberta-base',
+        default='/home/sunyuhan/syh/sunyuhan/zju/t5-base/',
         type=str,
         help='Base model')
 
     parser.add_argument(
         '--lora_model',
+        default='/home/sunyuhan/syh/sunyuhan/exp/loras/lora_t5-base_mnli',
         type=str,
         help='Lora model')
     args = parser.parse_args()
